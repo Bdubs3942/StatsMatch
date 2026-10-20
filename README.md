@@ -25,7 +25,6 @@ Open http://127.0.0.1:5000. Press Ctrl+C to stop.
 API client: `app/services/api_football.py`. GET route: `app/routes/api.py`.
 Provider documentation: https://www.api-football.com/documentation-v3
 
-## File organization
 
 - `app.py`: starts the server.
 - `app/__init__.py`: creates Flask and registers routes.

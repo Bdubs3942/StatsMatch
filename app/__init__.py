@@ -12,9 +12,11 @@ def create_app():
     from .routes.api import players_api
     from .routes.search import search_page
     from .routes.detail import detail_page
+    from .routes.explore import explore_pages
     app.register_blueprint(search_page)
     app.register_blueprint(detail_page)
     app.register_blueprint(players_api)
+    app.register_blueprint(explore_pages)
 
     @app.errorhandler(404)
     def not_found(error):

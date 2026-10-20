@@ -9,36 +9,36 @@
         <p class="muted">{{ player.country or 'Nationality unavailable' }} <span class="sep">•</span> Age {{ player.age or '—' }}</p>
     </div>
 </section>
-{% if player.get('season') %}
 <div class="results">
     <h2>The season in numbers</h2>
-    <span class="muted">Fictional season totals</span>
+    <span class="muted">{{ season }} season</span>
 </div>
-<section class="stats">
-    <div class="stat"><span>Appearances</span><strong>{{ player.appearances }}</strong></div>
-    <div class="stat"><span>Minutes played</span><strong>{{ player.minutes }}</strong></div>
-    <div class="stat"><span>Goals</span><strong>{{ player.goals }}</strong></div>
-    <div class="stat"><span>Assists</span><strong>{{ player.assists }}</strong></div>
-    <div class="stat"><span>Shots</span><strong>{{ player.shots }}</strong></div>
-    <div class="stat"><span>Pass accuracy</span><strong>{{ player.pass_accuracy }}%</strong></div>
-    <div class="stat"><span>Tackles</span><strong>{{ player.tackles }}</strong></div>
-    <div class="stat"><span>Interceptions</span><strong>{{ player.interceptions }}</strong></div>
-</section>
-<section class="per90">
-    <div>
-        <p class="eyebrow">A CLOSER LOOK</p>
-        <h2>Every 90 minutes</h2>
-        <p class="muted">Goals and assists adjusted for playing time.</p>
-    </div>
-    <div><strong>{{ goals_per_90 }}</strong><span>Goals / 90</span></div>
-    <div><strong>{{ assists_per_90 }}</strong><span>Assists / 90</span></div>
-</section>
-{% else %}
-<section class="stats">
-    <div class="stat"><span>Position</span><strong>{{ player.position or '—' }}</strong></div>
-    <div class="stat"><span>Height</span><strong>{{ player.height or '—' }}</strong></div>
-    <div class="stat"><span>Weight</span><strong>{{ player.weight or '—' }}</strong></div>
-</section>
-<p class="muted">Season statistics are not included in player profile searches.</p>
+{% if error %}
+<p class="empty" role="alert">{{ error }}</p>
+{% elif not statistics %}
+<p class="empty">No season statistics are available for this player in {{ season }}.</p>
 {% endif %}
+{% for stat in statistics %}
+<section aria-label="{{ (stat.get('league') or {}).get('name', 'Competition') }} statistics">
+    <div class="results">
+        <h2>{{ (stat.get('team') or {}).get('name') or 'Team unavailable' }}</h2>
+        <span class="muted">{{ (stat.get('league') or {}).get('name') or 'Competition unavailable' }}</span>
+    </div>
+    <div class="stats">
+        {% for label, group, field in metrics %}
+        {% set value = (stat.get(group) or {}).get(field) %}
+        <div class="stat"><span>{{ label }}</span><strong>{{ value if value is not none else '—' }}</strong></div>
+        {% endfor %}
+    </div>
+    <div class="per90">
+        <div>
+            <p class="eyebrow">A CLOSER LOOK</p>
+            <h2>Every 90 minutes</h2>
+            <p class="muted">Goals and assists adjusted for playing time.</p>
+        </div>
+        <div><strong>{{ per_90((stat.get('goals') or {}).get('total'), (stat.get('games') or {}).get('minutes')) }}</strong><span>Goals / 90</span></div>
+        <div><strong>{{ per_90((stat.get('goals') or {}).get('assists'), (stat.get('games') or {}).get('minutes')) }}</strong><span>Assists / 90</span></div>
+    </div>
+</section>
+{% endfor %}
 {% endblock %}

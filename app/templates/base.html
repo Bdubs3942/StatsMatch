@@ -11,7 +11,12 @@
         <a class="brand" href="{{ url_for('search.index') }}">
             <span class="logo">S</span>StatsMatch
         </a>
-        <a class="nav" href="{{ url_for('search.index') }}">Player directory</a>
+        <nav class="topnav" aria-label="Main navigation">
+            {% for endpoint, label in [('search.index', 'Player directory'), ('explore.compare', 'Compare'), ('explore.similarity_map', 'Similarity map')] %}
+            {% set active = request.endpoint == endpoint or (endpoint == 'search.index' and request.endpoint == 'detail.show') %}
+            <a class="nav" href="{{ url_for(endpoint) }}"{% if active %} aria-current="page"{% endif %}>{{ label }}</a>
+            {% endfor %}
+        </nav>
     </header>
     <main>
         {% block content %}{% endblock %}

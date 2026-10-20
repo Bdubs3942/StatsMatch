@@ -65,11 +65,21 @@ header {
     margin-left: 5px;
 }
 
+.topnav {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
 .nav {
     font-weight: 600;
     text-decoration: none;
-    border-bottom: 2px solid var(--green);
+    border-bottom: 2px solid transparent;
     padding: 10px 0;
+}
+
+.nav[aria-current="page"] {
+    border-bottom-color: var(--green);
 }
 
 main {
@@ -408,16 +418,24 @@ footer {
 
 @media(max-width:700px) {
     header {
-        height: 72px;
-        padding: 0 20px;
+        height: auto;
+        min-height: 72px;
+        padding: 16px 20px;
+        flex-wrap: wrap;
+        gap: 12px;
     }
 
     .brand {
         font-size: 20px;
     }
 
-    .prototype, .count, .nav {
+    .prototype, .count {
         display: none;
+    }
+
+    .topnav {
+        flex-wrap: wrap;
+        gap: 16px;
     }
 
     main {
