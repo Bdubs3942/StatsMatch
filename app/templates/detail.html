@@ -6,10 +6,10 @@
     <div>
         <p class="eyebrow">{{ player.position }}</p>
         <h1>{{ player.name }}</h1>
-        <p class="muted">{{ player.team }} <span class="sep">•</span> {{ player.country }} <span class="sep">•</span> Age {{ player.age }}</p>
+        <p class="muted">{{ player.country or 'Nationality unavailable' }} <span class="sep">•</span> Age {{ player.age or '—' }}</p>
     </div>
-    <span class="season">{{ player.season }} season</span>
 </section>
+{% if player.get('season') %}
 <div class="results">
     <h2>The season in numbers</h2>
     <span class="muted">Fictional season totals</span>
@@ -33,4 +33,12 @@
     <div><strong>{{ goals_per_90 }}</strong><span>Goals / 90</span></div>
     <div><strong>{{ assists_per_90 }}</strong><span>Assists / 90</span></div>
 </section>
+{% else %}
+<section class="stats">
+    <div class="stat"><span>Position</span><strong>{{ player.position or '—' }}</strong></div>
+    <div class="stat"><span>Height</span><strong>{{ player.height or '—' }}</strong></div>
+    <div class="stat"><span>Weight</span><strong>{{ player.weight or '—' }}</strong></div>
+</section>
+<p class="muted">Season statistics are not included in player profile searches.</p>
+{% endif %}
 {% endblock %}

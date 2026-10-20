@@ -17,6 +17,6 @@ def show(player_id):
     return render_template(
         'detail.html', title=player['name'], player=player,
         query=request.args.get('q', '').strip(),
-        goals_per_90=per_90(player['goals'], player['minutes']),
-        assists_per_90=per_90(player['assists'], player['minutes']),
+        goals_per_90=per_90(player.get('goals', 0), player.get('minutes', 0)),
+        assists_per_90=per_90(player.get('assists', 0), player.get('minutes', 0)),
     )

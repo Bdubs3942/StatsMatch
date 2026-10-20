@@ -6,21 +6,23 @@
         <h1>Find your next favorite.</h1>
         <p class="muted">Explore the players. Get to know the numbers behind their game.</p>
     </div>
-    <div class="count"><strong>{{ total_players }}</strong><span>players to discover</span></div>
+    <div class="count"><strong>{{ total_players }}</strong><span>players saved</span></div>
 </div>
 <form action="{{ url_for('search.index') }}" method="get" class="search">
     <label for="q">Search players</label>
     <div class="searchline">
-        <input id="q" name="q" value="{{ query }}" placeholder="Search by name, team, or position…" type="search">
+        <input id="q" name="q" value="{{ query }}" placeholder="Search by player name…" type="search" required>
         <button>Search players <span aria-hidden="true">→</span></button>
     </div>
 </form>
+{% if error %}<p role="alert" class="empty">{{ error }}</p>{% endif %}
+{% if paging.get('total', 1) > 1 %}<p class="muted">Loaded {{ paging.current }} of {{ paging.total }} pages.</p>{% endif %}
 <div class="results">
     <h2>Player directory <span>{{ players|length }} results</span></h2>
     {% if query %}
     <a href="{{ url_for('search.index') }}">Clear search</a>
     {% else %}
-    <span class="muted">Select a name to explore their stats</span>
+    <span class="muted">Enter a name to search for players</span>
     {% endif %}
 </div>
 <div class="tablewrap">
@@ -28,9 +30,8 @@
         <thead>
             <tr>
                 <th scope="col">Player</th>
-                <th scope="col">Team</th>
+                <th scope="col">Nationality</th>
                 <th scope="col">Position</th>
-                <th><span class="sr-only">Profile</span></th>
             </tr>
         </thead>
         <tbody>
@@ -38,23 +39,32 @@
             <tr>
                 <td>
                     <a class="player" href="{{ url_for('detail.show', player_id=player.id, q=query) }}">
+                        {% if player.photo %}
+                        <img class="avatar" src="{{ player.photo }}" alt="" width="39" height="39" loading="lazy">
+                        {% else %}
                         <span class="avatar">{% for name in player.name.split() %}{{ name[0] }}{% endfor %}</span>
+                        {% endif %}
                         {{ player.name }}
                     </a>
                 </td>
-                <td>{{ player.team }}</td>
-                <td><span class="tag">{{ player.position }}</span></td>
-                <td class="arrow" aria-hidden="true">↗</td>
+                <td>{{ player.country or '—' }}</td>
+                <td><span class="tag">{{ player.position or '—' }}</span></td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
-    {% if not players %}
+    {% if not players and not error %}
     <div class="empty">
-        <h3>No players found</h3>
-        <p>Try a different name, team, or position.</p>
-        <a href="{{ url_for('search.index') }}">View all players</a>
+        <h3>{{ 'No players found' if query else 'Search for a player' }}</h3>
+        <p>{{ 'Try a different player name.' if query else 'Enter at least 4 characters to search for new players.' }}</p>
     </div>
     {% endif %}
 </div>
+{% if next_page %}
+<form action="{{ url_for('search.index') }}" method="get" class="results">
+    <input type="hidden" name="q" value="{{ query }}">
+    <input type="hidden" name="page" value="{{ next_page }}">
+    <button type="submit">Load more</button>
+</form>
+{% endif %}
 {% endblock %}
