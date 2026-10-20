@@ -1,0 +1,13 @@
+id,name,team,position,country,age,season,appearances,minutes,goals,assists,shots,pass_accuracy,tackles,interceptions
+1,Marcus Vance,London FC,Attacking Midfielder,England,24,2025/26,30,2470,12,14,78,87,32,21
+2,Carlos Vega,Madrid Blancos,Forward,Spain,26,2025/26,32,2710,24,8,112,82,18,9
+3,Aiden Sterling,Manchester Blues,Central Midfielder,England,25,2025/26,29,2380,7,12,54,91,46,34
+4,Jonas Lindqvist,Munich Sport,Winger,Sweden,23,2025/26,28,2100,13,9,81,84,24,16
+5,Koji Tanaka,Tokyo Athletic,Attacking Midfielder,Japan,22,2025/26,31,2560,9,11,66,89,35,27
+6,Enzo Garrido,Milan United,Defensive Midfielder,Argentina,28,2025/26,33,2850,3,5,28,92,87,62
+7,Lucas Moreau,Paris Elite,Forward,France,24,2025/26,30,2490,21,6,104,80,16,8
+8,Rafael Costa,Lisbon Stars,Left Back,Portugal,25,2025/26,32,2790,2,10,24,88,74,51
+9,Noah Berg,Oslo City,Centre Back,Norway,27,2025/26,31,2750,4,2,19,90,65,73
+10,Mateo Silva,Seville Athletic,Right Back,Uruguay,23,2025/26,27,2230,1,7,21,86,68,44
+11,Daniel Okafor,Lagos United,Winger,Nigeria,21,2025/26,26,1850,10,8,72,81,22,15
+12,Elias Haddad,Marseille Coast,Central Midfielder,Morocco,26,2025/26,30,2600,6,9,47,90,58,42

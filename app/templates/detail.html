@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<a class="back" href="{{ url_for('search.index', q=query) }}">← Back to search results</a>
+<section class="profile">
+    <span class="avatar large">{% for name in player.name.split() %}{{ name[0] }}{% endfor %}</span>
+    <div>
+        <p class="eyebrow">{{ player.position }}</p>
+        <h1>{{ player.name }}</h1>
+        <p class="muted">{{ player.team }} <span class="sep">•</span> {{ player.country }} <span class="sep">•</span> Age {{ player.age }}</p>
+    </div>
+    <span class="season">{{ player.season }} season</span>
+</section>
+<div class="results">
+    <h2>The season in numbers</h2>
+    <span class="muted">Fictional season totals</span>
+</div>
+<section class="stats">
+    <div class="stat"><span>Appearances</span><strong>{{ player.appearances }}</strong></div>
+    <div class="stat"><span>Minutes played</span><strong>{{ player.minutes }}</strong></div>
+    <div class="stat"><span>Goals</span><strong>{{ player.goals }}</strong></div>
+    <div class="stat"><span>Assists</span><strong>{{ player.assists }}</strong></div>
+    <div class="stat"><span>Shots</span><strong>{{ player.shots }}</strong></div>
+    <div class="stat"><span>Pass accuracy</span><strong>{{ player.pass_accuracy }}%</strong></div>
+    <div class="stat"><span>Tackles</span><strong>{{ player.tackles }}</strong></div>
+    <div class="stat"><span>Interceptions</span><strong>{{ player.interceptions }}</strong></div>
+</section>
+<section class="per90">
+    <div>
+        <p class="eyebrow">A CLOSER LOOK</p>
+        <h2>Every 90 minutes</h2>
+        <p class="muted">Goals and assists adjusted for playing time.</p>
+    </div>
+    <div><strong>{{ goals_per_90 }}</strong><span>Goals / 90</span></div>
+    <div><strong>{{ assists_per_90 }}</strong><span>Assists / 90</span></div>
+</section>
+{% endblock %}

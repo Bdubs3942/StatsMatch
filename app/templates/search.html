@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="intro">
+    <div>
+        <p class="eyebrow">THE PLAYER EXPLORER</p>
+        <h1>Find your next favorite.</h1>
+        <p class="muted">Explore the players. Get to know the numbers behind their game.</p>
+    </div>
+    <div class="count"><strong>{{ total_players }}</strong><span>players to discover</span></div>
+</div>
+<form action="{{ url_for('search.index') }}" method="get" class="search">
+    <label for="q">Search players</label>
+    <div class="searchline">
+        <input id="q" name="q" value="{{ query }}" placeholder="Search by name, team, or position…" type="search">
+        <button>Search players <span aria-hidden="true">→</span></button>
+    </div>
+</form>
+<div class="results">
+    <h2>Player directory <span>{{ players|length }} results</span></h2>
+    {% if query %}
+    <a href="{{ url_for('search.index') }}">Clear search</a>
+    {% else %}
+    <span class="muted">Select a name to explore their stats</span>
+    {% endif %}
+</div>
+<div class="tablewrap">
+    <table>
+        <thead>
+            <tr>
+                <th scope="col">Player</th>
+                <th scope="col">Team</th>
+                <th scope="col">Position</th>
+                <th><span class="sr-only">Profile</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for player in players %}
+            <tr>
+                <td>
+                    <a class="player" href="{{ url_for('detail.show', player_id=player.id, q=query) }}">
+                        <span class="avatar">{% for name in player.name.split() %}{{ name[0] }}{% endfor %}</span>
+                        {{ player.name }}
+                    </a>
+                </td>
+                <td>{{ player.team }}</td>
+                <td><span class="tag">{{ player.position }}</span></td>
+                <td class="arrow" aria-hidden="true">↗</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% if not players %}
+    <div class="empty">
+        <h3>No players found</h3>
+        <p>Try a different name, team, or position.</p>
+        <a href="{{ url_for('search.index') }}">View all players</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
