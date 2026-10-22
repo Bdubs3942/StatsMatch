@@ -8,12 +8,13 @@ Local Flask app that searches API-Football and saves player profiles in
 Add your API-Football (API-Sports) key to `.env` in the project root:
 
 ```dotenv
-API_FOOTBALL_KEY=your-api-key
+API_FOOTBALL_KEY=apikey
 ```
 
 ## Run in PowerShell
 
 ```powershell
+navigate to local file - "cd "C:\xxxx\xxxx\xxxx\StatsMatch""
 python -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
 .\.venv\Scripts\python.exe app.py
